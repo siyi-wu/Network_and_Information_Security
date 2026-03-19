@@ -1,0 +1,85 @@
+
+    <html>
+    <head>
+        <title>Adversarial Attack Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }
+            th { background-color: #f2f2f2; }
+            .unk { color: red; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        <h2>NLP Adversarial Examples (Gradient-Based Word Swap)</h2>
+        <table>
+            <tr>
+                <th>Max Swaps</th>
+                <th>Original Text (Label)</th>
+                <th>Adversarial Text (Prediction)</th>
+            </tr>
+    
+            <tr>
+                <td>1</td>
+                <td>lovingly photographed in the manner of a golden book sprung to life , stuart little 2 manages sweetness largely without stickiness .<br><i>True Label: 1</i></td>
+                <td>lovingly photographed in the manner of a golden book sprung to life, stuart little 2 manages sweetness largely withoutiness.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>1</td>
+                <td>this is a fascinating film because there is no clear-cut hero and no all-out villain .<br><i>True Label: 1</i></td>
+                <td>this is a film because there is no clear - cut hero and no all - out villain.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>2</td>
+                <td>lovingly photographed in the manner of a golden book sprung to life , stuart little 2 manages sweetness largely without stickiness .<br><i>True Label: 1</i></td>
+                <td>lovingly photographed in the manner of a golden book sprung to life, stuart little 2 manages sweetness largely without.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>2</td>
+                <td>this is a fascinating film because there is no clear-cut hero and no all-out villain .<br><i>True Label: 1</i></td>
+                <td>this is a film because there is no clear - cut hero and no all - out.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>3</td>
+                <td>lovingly photographed in the manner of a golden book sprung to life , stuart little 2 manages sweetness largely without stickiness .<br><i>True Label: 1</i></td>
+                <td>lovingly photographed in the manner of a golden book sprung to life, stuart little 2 sweetness largely without.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>3</td>
+                <td>consistently clever and suspenseful .<br><i>True Label: 1</i></td>
+                <td>andful.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>4</td>
+                <td>mostly , [goldbacher] just lets her complicated characters be unruly , confusing and , through it all , human .<br><i>True Label: 1</i></td>
+                <td>, [ goldbacher ] just her complicated characters be unruly, and, through it all,.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>4</td>
+                <td>. . . quite good at providing some good old fashioned spooks .<br><i>True Label: 1</i></td>
+                <td>... at some good old spooks.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>5</td>
+                <td>mostly , [goldbacher] just lets her complicated characters be unruly , confusing and , through it all , human .<br><i>True Label: 1</i></td>
+                <td>, [ goldbacher ] just her characters be unruly, and, through it all,.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+            <tr>
+                <td>5</td>
+                <td>you've already seen city by the sea under a variety of titles , but it's worth yet another visit .<br><i>True Label: 1</i></td>
+                <td>you ' ve already seen city by the sea under a variety of, but it ' s.<br><i>Adv Label: 0</i></td>
+            </tr>
+        
+        </table>
+    </body>
+    </html>
+    
