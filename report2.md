@@ -87,6 +87,7 @@ def gradient_based_word_swap(model, tokenizer, text, true_label, device, max_swa
 **样本数量**：100条测试样本
 **攻击方法**：基于梯度的词替换攻击
 **评估指标**：
+
 - 原始准确率（Clean Accuracy）
 - 攻击成功率（ASR, Attack Success Rate）
 - 词汇修改率（Word Change Rate）
