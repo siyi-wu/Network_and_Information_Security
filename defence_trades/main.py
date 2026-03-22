@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 
-# 导入自定义模块
 from dataset import get_cifar10_dataloaders, mixup_data, mixup_criterion
 from model import get_resnet_model
 from trades import trades_loss
@@ -40,11 +39,9 @@ def train_robust(model, trainloader, optimizer, device, epochs):
             inputs_mixed, labels_a, labels_b = map(torch.autograd.Variable, (inputs_mixed, labels_a, labels_b))
 
             # 2. TRADES 对抗训练损失计算 [cite: 13]
-            # 注意：此处将 Mixup 后的数据喂入 TRADES 损失计算
             loss = trades_loss(model, inputs_mixed, labels, optimizer, step_size=0.003, epsilon=0.031, perturb_steps=10, beta=6.0)
             
-            # 由于 trades_loss 内部计算了 natural loss，我们这里需要将其替换为 mixup 的 label 计算方式
-            # 为了简化实验并保持 TRADES 核心，我们这里直接反向传播 TRADES 算出的综合 loss
+            # 由于 trades_loss 内部计算了 natural loss，这里需要将其替换为 mixup 的 label 计算方式
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
@@ -56,7 +53,6 @@ def evaluate(model, testloader, device, adversarial=False):
     correct = 0
     total = 0
     
-    # 如果是对抗评估，只取一部分测试集以节省时间（实验模拟）
     max_batches = 20 if adversarial else len(testloader) 
     
     for i, (inputs, labels) in enumerate(testloader):
@@ -65,7 +61,7 @@ def evaluate(model, testloader, device, adversarial=False):
         inputs, labels = inputs.to(device), labels.to(device)
         
         if adversarial:
-            # PGD 白盒攻击 [cite: 6, 7]
+            # PGD 白盒攻击
             inputs = pgd_attack(model, inputs, labels, eps=8/255, alpha=2/255, steps=20)
             
         outputs = model(inputs)
@@ -80,7 +76,6 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     
-    # 路径设置
     torch.hub.set_dir('./torch')
 
     trainloader, testloader = get_cifar10_dataloaders(batch_size=128)
@@ -101,7 +96,6 @@ def main():
     # 降低学习率进行微调，避免破坏预训练特征
     optimizer_rob = optim.SGD(model_rob.parameters(), lr=0.001, momentum=0.9, weight_decay=5e-4)
     
-    # 运行 5-10 个 epoch 的 TRADES 微调
     train_robust(model_rob, trainloader, optimizer_rob, device, epochs=15)
     
     print("Evaluating Robust Model...")
@@ -109,7 +103,6 @@ def main():
     adv_acc_rob = evaluate(model_rob, testloader, device, adversarial=True)
     print(f"Robust Model -> Clean ACC: {clean_acc_rob:.2f}%, Robust ACC (PGD): {adv_acc_rob:.2f}%")
 
-    # 3. 量化评估
     # 3. 量化评估
     print("\n--- Phase 3: Final Metrics & Overhead Evaluation ---")
     print(f"防御代价 (Accuracy Drop): {clean_acc_std - clean_acc_rob:.2f}%")

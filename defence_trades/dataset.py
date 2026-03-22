@@ -4,19 +4,18 @@ import torchvision
 import torchvision.transforms as transforms
 
 def get_cifar10_dataloaders(batch_size=128):
-    # 修正：必须使用 CIFAR-10 标准的归一化参数 [cite: 28]
     stats = ((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
     
     transform_train = transforms.Compose([
         transforms.RandomCrop(32, padding=4),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
-        transforms.Normalize(*stats), # 加上归一化
+        transforms.Normalize(*stats), 
     ])
     
     transform_test = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize(*stats), # 加上归一化
+        transforms.Normalize(*stats), 
     ])
 
     trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform_train)

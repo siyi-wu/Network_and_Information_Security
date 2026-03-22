@@ -16,7 +16,7 @@ def main():
     optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=2e-4)
     criterion = nn.CrossEntropyLoss()
     
-    epochs = 10 # 仅作演示，实际可能需要 50-100 epochs
+    epochs = 10 # 仅实验，实际可能需要 50-100 epochs
     beta = 6.0  # TRADES 正则化权重
     
     for epoch in range(epochs):

@@ -32,7 +32,6 @@ def run_inference(base_weights="base_vit_weights.pth", def_weights="defended_vit
         print(f"-> 警告：未找到 {def_weights}，将使用随机初始化权重。强烈建议先运行 train.py！")
 
     # 3. 运行评估逻辑
-    # 注意：为了演示速度，evaluate.py 中默认 test_batches=4。若要完整测试请在下方传入 test_batches=None
     print("\n[开始评估基线 ViT]")
     base_clean_acc, base_adv_acc, base_latency = evaluate_robustness_and_latency(
         base_model, test_loader, device, is_defended=False, test_batches=10
@@ -54,13 +53,13 @@ def run_inference(base_weights="base_vit_weights.pth", def_weights="defended_vit
     print(f"\n【防御代价权衡 (Trade-off)】")
     acc_drop = base_clean_acc - def_clean_acc
     rob_gain = def_adv_acc - base_adv_acc
-    print(f"  - 干净样本精度下降率: {acc_drop:.2f}%") # 对应要求: 干净样本精度下降率 vs 鲁棒性提升度 
-    print(f"  - 鲁棒性提升度: {rob_gain:.2f}%") # 对应要求: 干净样本精度下降率 vs 鲁棒性提升度 
+    print(f"  - 干净样本精度下降率: {acc_drop:.2f}%") 
+    print(f"  - 鲁棒性提升度: {rob_gain:.2f}%") 
     
     print(f"\n【计算开销对比 (Latency)】")
     latency_increase = def_latency - base_latency
-    print(f"  - 单样本推理延迟: 基线 {base_latency:.2f}ms | 防御后 {def_latency:.2f}ms") # 对应要求: 计算开销对比(防御引入的推理延迟) [cite: 21]
-    print(f"  - 防御引入额外延迟: {latency_increase:+.2f}ms") # 对应要求: 计算开销对比(防御引入的推理延迟) [cite: 21]
+    print(f"  - 单样本推理延迟: 基线 {base_latency:.2f}ms | 防御后 {def_latency:.2f}ms") 
+    print(f"  - 防御引入额外延迟: {latency_increase:+.2f}ms") 
     print("="*50)
     
     print("\n正在测试集中寻找完美的防御成功案例...")

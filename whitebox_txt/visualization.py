@@ -91,7 +91,6 @@ def generate_html_report(successful_cases, save_dir='./results'):
     """
     
     for case in successful_cases:
-        # 在 HTML 中使用 CSS 类高亮 [UNK]
         adv_html = case['adv_text'].replace("[UNK]", "<span class='unk'>[UNK]</span>")
         html_content += f"""
             <tr>

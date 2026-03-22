@@ -23,7 +23,6 @@ def plot_metrics(metrics):
     plt.ylabel('Accuracy / Robustness')
     plt.title('Accuracy vs Robustness Trade-off')
     
-    # 在柱状图上添加具体数值
     for bar in bars:
         yval = bar.get_height()
         plt.text(bar.get_x() + bar.get_width()/2, yval + 0.02, f'{yval:.2%}', ha='center', va='bottom')
@@ -38,7 +37,6 @@ def plot_metrics(metrics):
     max_latency = max(latencies)
     for bar in bars_lat:
         yval = bar.get_height()
-        # 将原本的 yval + 0.5 改为 yval + max_latency * 0.05
         plt.text(bar.get_x() + bar.get_width()/2, yval + max_latency * 0.05, f'{yval:.2f} ms', ha='center', va='bottom')
     
     plt.tight_layout()

@@ -21,7 +21,6 @@ def plot_tradeoff(clean_acc_std, adv_acc_std, clean_acc_def, adv_acc_def):
     ax.set_xticklabels(labels)
     ax.legend()
     
-    # 添加数值标签
     for rect in rects1 + rects2:
         height = rect.get_height()
         ax.annotate(f'{height:.1f}%',
@@ -40,7 +39,7 @@ def measure_inference_latency(model, device, input_shape=(1, 3, 32, 32), num_run
     model.eval()
     dummy_input = torch.randn(input_shape).to(device)
     
-    # 预热 (Warm-up) - 极其重要，否则第一次计算会包含初始化开销
+    # 预热
     with torch.no_grad():
         for _ in range(20):
             _ = model(dummy_input)
@@ -75,10 +74,8 @@ def plot_latency(latency_std, latency_rob):
     ax.set_ylabel('Inference Latency (ms / image)')
     ax.set_title('Computational Overhead: Inference Latency Comparison')
     
-    # 设置 Y 轴从 0 开始，稍微留点余量
     ax.set_ylim(0, max(latencies) * 1.5)
 
-    # 添加数值标签
     for bar in bars:
         height = bar.get_height()
         ax.annotate(f'{height:.3f} ms',

@@ -14,9 +14,7 @@ def evaluate_pipeline(model, dataloader, attacker, detector):
 
     results = {'clean_images': [], 'adv_images': [], 'labels': [], 'clean_preds': [], 'adv_preds': []}
 
-    # ==========================================
-    # 阶段一：防御器校准 (Calibration)
-    # ==========================================
+    # 防御器校准
     # 获取第一批数据用于计算阈值
     calib_images, calib_labels = next(iter(dataloader))
     calib_images, calib_labels = calib_images.to(config.DEVICE), calib_labels.to(config.DEVICE)
@@ -30,9 +28,8 @@ def evaluate_pipeline(model, dataloader, attacker, detector):
     # 执行校准（设定 95% 置信区间）
     detector.calibrate(calib_images[correct_mask], calib_labels[correct_mask], percentile=80)
 
-    # ==========================================
-    # 阶段二：量化评估 (Evaluation)
-    # ==========================================
+
+    # 量化评估
     print("[*] 开始全量数据评估...")
     for images, labels in dataloader:
         images, labels = images.to(config.DEVICE), labels.to(config.DEVICE)

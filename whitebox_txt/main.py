@@ -87,13 +87,10 @@ def main():
     # 原始 NLP 曲线
     plot_nlp_tradeoff_curves(max_swaps_list, asr_results, change_rate_results)
     
-    # 新增：符合实验要求格式的 ASR vs 感知相似性权衡曲线 
-    # 在文本任务中，change_rate_results 对应感知距离
-    # 如果你在做图像实验，则传入 LPIPS/SSIM 的计算结果
     plot_perceptual_tradeoff(
         asr_list=asr_results, 
         similarity_metrics=change_rate_results, 
-        metric_name='WordChangeRate_as_Perceptual' # 明确标注对应关系
+        metric_name='WordChangeRate_as_Perceptual' 
     )
     
     generate_html_report(successful_cases_for_report)

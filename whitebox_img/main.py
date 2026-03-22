@@ -36,12 +36,10 @@ def main():
             
             adv_images = generate_adv_images(atk, images, labels)
             
-            # === 修改：接收预测标签 ===
             batch_asr, batch_lpips, batch_ssim, clean_acc, clean_preds, adv_preds = evaluate_attack(
                 model, images, adv_images, labels, lpips_loss_fn, device
             )
             
-            # === 新增：在每种强度的第一个批次截取5张图片进行直观展示 ===
             if batches == 0:
                 plot_adversarial_examples(
                     images, adv_images, labels, clean_preds, adv_preds, 
@@ -69,7 +67,7 @@ def main():
     print(f"\n{'-'*40}")
     print("[*] 正在生成密集的权衡曲线...")
     plot_tradeoff_curves(eps_list, asr_results, lpips_results, ssim_results)
-    print("[*] 实验一阶段完成！完美曲线与样本可视化图均已生成。")
+    print("[*] 实验一阶段完成！曲线与样本可视化图已生成。")
 
 if __name__ == "__main__":
     main()

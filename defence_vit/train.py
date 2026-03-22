@@ -58,7 +58,7 @@ def train_robust_model(epochs=10, save_path="defended_vit_weights.pth"):
     criterion = nn.CrossEntropyLoss()
 
     # 权衡参数：控制干净样本精度与鲁棒性的比重
-    alpha = 0.6  # 0.6 表示我们略微更看重干净样本的精度
+    alpha = 0.6  
 
     for epoch in range(epochs):
         correct_clean = 0
@@ -107,8 +107,6 @@ def train_robust_model(epochs=10, save_path="defended_vit_weights.pth"):
     print(f"--- 防御模型训练完成，权重保存至: {save_path} ---")
 
 if __name__ == "__main__":
-    # 正式实验建议 epochs 设置为 10-20 以保证收敛
-    # 如果觉得训练太慢，可以先将 epochs 改为 5 进行快速验证
     epochs_to_run = 7
     train_base_model(epochs=epochs_to_run)
     train_robust_model(epochs=epochs_to_run)

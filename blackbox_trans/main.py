@@ -97,12 +97,11 @@ def main():
     for current_eps in eps_list:
         print(f"\n评估 eps = {current_eps:.3f} ...")
         
-        # 1. 使用当前 eps 生成迁移对抗样本 (由于评估较慢，这里仅用迁移攻击演示趋势)
+        # 1. 使用当前 eps 生成迁移对抗样本
         current_adv_images = pgd_attack(sub_model, images, labels, eps=current_eps, alpha=current_eps/4, iters=20)
         
         # 2. 计算目标模型上的攻击成功率 (ASR)
         # ASR = (原先预测正确且现在预测错误的样本数) / (原先预测正确的样本数)
-        # 为了简便，我们直接使用：1 - 当前准确率 
         with torch.no_grad():
             preds = target_model(current_adv_images).argmax(dim=1)
             # 计算准确率

@@ -17,7 +17,6 @@ def visualize_defense_and_tradeoff(clean_img, adv_img, purified_img, true_label,
 
     fig = plt.figure(figsize=(14, 10))
     
-    # ================= 区域 1：图像可视化 (上半部分) =================
     ax1 = plt.subplot(2, 4, 1)
     ax1.imshow(clean_img_np)
     ax1.set_title(f"Clean Image\nTrue Label: {true_label}\nBase Pred: {base_pred}", color='green')
@@ -38,10 +37,8 @@ def visualize_defense_and_tradeoff(clean_img, adv_img, purified_img, true_label,
     ax4.set_title(f"Purified by Defense\nDefended Pred: {def_pred}", color='green')
     ax4.axis('off')
 
-    # ================= 区域 2：防御代价与鲁棒性权衡图表 (下半部分) =================
     ax5 = plt.subplot(2, 1, 2)
     
-    # 移除中文，避免字体缺失警告
     labels = ['Clean Sample Accuracy', 'Robust Accuracy']
     base_scores = [base_clean_acc, base_adv_acc]
     def_scores = [def_clean_acc, def_adv_acc]
@@ -49,7 +46,6 @@ def visualize_defense_and_tradeoff(clean_img, adv_img, purified_img, true_label,
     x = np.arange(len(labels))
     width = 0.35
     
-    # 移除中文图例
     rects1 = ax5.bar(x - width/2, base_scores, width, label='Base ViT', color='#ff9999')
     rects2 = ax5.bar(x + width/2, def_scores, width, label='Defended ViT', color='#66b3ff')
     
@@ -57,10 +53,9 @@ def visualize_defense_and_tradeoff(clean_img, adv_img, purified_img, true_label,
     ax5.set_title('Defense Trade-off: Clean Acc Drop vs Robustness Gain')
     ax5.set_xticks(x)
     ax5.set_xticklabels(labels)
-    ax5.set_ylim(0, 110) # 留出顶部空间显示数值
+    ax5.set_ylim(0, 110) 
     ax5.legend()
     
-    # 在柱子上添加具体的数值标签
     def autolabel(rects):
         for rect in rects:
             height = rect.get_height()

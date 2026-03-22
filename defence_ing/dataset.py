@@ -14,7 +14,7 @@ def get_dataloader():
     testset = torchvision.datasets.CIFAR10(
         root=config.DATA_DIR, train=False, download=True, transform=transform_test)
     
-    # 仅取部分数据用于演示，以节省时间
+    # 仅取部分数据用于实验，以节省时间
     subset_indices = list(range(500)) 
     testset_subset = torch.utils.data.Subset(testset, subset_indices)
     

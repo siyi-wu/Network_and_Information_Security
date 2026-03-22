@@ -29,7 +29,6 @@ def plot_tradeoff_curve(patch_sizes, asrs, ssims):
     # 绘制折线图，X轴为SSIM(感知相似度)，Y轴为ASR(攻击成功率)
     plt.plot(ssims, asrs, marker='o', linestyle='-', color='b', markersize=8)
     
-    # 在每个数据点旁边标出对应的补丁尺寸
     for i in range(len(patch_sizes)):
         plt.annotate(f"{patch_sizes[i]}x{patch_sizes[i]}", 
                      (ssims[i], asrs[i]), 
@@ -42,7 +41,6 @@ def plot_tradeoff_curve(patch_sizes, asrs, ssims):
     plt.ylabel('Attack Success Rate (ASR) %')
     plt.grid(True, linestyle='--', alpha=0.7)
     
-    # 调整坐标轴方向（通常习惯让SSIM从大到小排列，因为越往右代表越隐蔽）
     plt.gca().invert_xaxis()
     
     path = os.path.join(config.OUTPUT_DIR, "tradeoff_curve.png")

@@ -12,7 +12,7 @@ def get_word_saliency(model, tokenizer, text, label, device):
 
     # 1. 获取 Embedding 层的权重
     embeddings = model.get_input_embeddings()(input_ids)
-    embeddings.retain_grad() # 核心：保留对连续 Embedding 的梯度
+    embeddings.retain_grad() # 保留对连续 Embedding 的梯度
 
     # 2. 前向传播 (手动传入 embeddings 而不是 input_ids)
     outputs = model(inputs_embeds=embeddings, attention_mask=attention_mask)

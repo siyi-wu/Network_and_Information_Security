@@ -65,6 +65,33 @@ def plot_tradeoff_curve(ssim_values, asr_values, eps_values):
     print(">>> 权衡曲线已成功保存为: tradeoff_curve.png")
 
 def visualize_attack(clean_images, adv_images, clean_preds, adv_preds, true_labels, num_images=5):
-    """保留之前的攻击前后对比图可视化"""
-    # (保留原有代码逻辑，此处省略以保持篇幅简洁，请粘贴之前的具体实现)
-    pass
+    """可视化攻击效果并保存图片"""
+    plt.figure(figsize=(15, 8))
+    # 确保不超过批次大小
+    num_images = min(num_images, clean_images.size(0))
+    
+    for i in range(num_images):
+        # 1. 原始干净图像
+        plt.subplot(3, num_images, i + 1)
+        true_class = CIFAR_CLASSES[true_labels[i]]
+        clean_class = CIFAR_CLASSES[clean_preds[i]]
+        imshow(clean_images[i], title=f"Clean\nTrue: {true_class}\nPred: {clean_class}")
+        plt.axis('off')
+
+        # 2. 对抗扰动 (噪声)
+        noise = adv_images[i] - clean_images[i]
+        noise_norm = (noise - noise.min()) / (noise.max() - noise.min() + 1e-8)
+        plt.subplot(3, num_images, i + 1 + num_images)
+        plt.imshow(np.transpose(noise_norm.cpu().detach().numpy(), (1, 2, 0)))
+        plt.title("Perturbation")
+        plt.axis('off')
+
+        # 3. 对抗样本
+        plt.subplot(3, num_images, i + 1 + 2 * num_images)
+        adv_class = CIFAR_CLASSES[adv_preds[i]]
+        imshow(adv_images[i], title=f"Adversarial\nPred: {adv_class}")
+        plt.axis('off')
+
+    plt.tight_layout()
+    plt.savefig("attack_visualization.png", dpi=150)
+    print(">>> 可视化结果已成功保存为: attack_visualization.png")

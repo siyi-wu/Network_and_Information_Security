@@ -27,7 +27,7 @@ def main():
         all_asrs.append(asr)
         all_ssims.append(avg_ssim)
         
-        # 只保存最大尺寸补丁的图片做示例展示
+        # 只保存最大尺寸补丁的图片做示例
         if size == config.PATCH_SIZES[-1]:
             save_patch(trained_patch.detach(), filename=f"trained_patch_{size}x{size}.png")
             
@@ -46,7 +46,7 @@ def main():
                 if labels[i] != config.TARGET_CLASS:
                     save_comparison(images[i], patched_images[i], orig_preds[i], patch_preds[i], index=f"{size}x{size}_{i}")
 
-    # ===== 绘制核心的 ASR vs SSIM 权衡曲线 =====
+    # 绘制 ASR vs SSIM 权衡曲线 
     plot_tradeoff_curve(config.PATCH_SIZES, all_asrs, all_ssims)
 
 if __name__ == "__main__":

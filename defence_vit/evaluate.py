@@ -17,10 +17,6 @@ def evaluate_robustness_and_latency(model, data_loader, device, is_defended=Fals
 
     print(f"--- 正在评估模型 (防御开启: {is_defended}) ---")
     
-    # ---------------------------------------------------------
-    # 核心修正：GPU Warmup (预热)
-    # 提前跑几个 Batch，让 CUDA 初始化显存和内核，避免把初始化时间算入延迟
-    # ---------------------------------------------------------
     print("  -> 正在进行 GPU 预热...")
     dummy_loader = iter(data_loader)
     for _ in range(3):

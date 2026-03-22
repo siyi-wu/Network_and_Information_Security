@@ -50,7 +50,6 @@ def plot_adversarial_examples(clean_images, adv_images, true_labels, clean_preds
         # 1. 显示干净样本
         ax_clean = axes[0, i]
         clean_img = clean_images[i].cpu().numpy().transpose(1, 2, 0)
-        # === 新增：强制截断到 [0, 1] 范围，消除 imshow 警告 ===
         clean_img = np.clip(clean_img, 0, 1) 
         ax_clean.imshow(clean_img)
         ax_clean.axis('off')
@@ -63,7 +62,6 @@ def plot_adversarial_examples(clean_images, adv_images, true_labels, clean_preds
         # 2. 显示对抗样本
         ax_adv = axes[1, i]
         adv_img = adv_images[i].cpu().numpy().transpose(1, 2, 0)
-        # === 新增：强制截断到 [0, 1] 范围，消除 imshow 警告 ===
         adv_img = np.clip(adv_img, 0, 1) 
         ax_adv.imshow(adv_img)
         ax_adv.axis('off')
@@ -72,7 +70,7 @@ def plot_adversarial_examples(clean_images, adv_images, true_labels, clean_preds
         color_adv = 'green' if true_labels[i] == adv_preds[i] else 'red'
         ax_adv.set_title(f"Adv Pred: {adv_pred_class}", color=color_adv)
         
-        # 3. 显示放大的扰动噪声 (这段保持不变，因为我们已经自己做了归一化处理)
+        # 3. 显示放大的扰动噪声
         ax_noise = axes[2, i]
         noise = adv_img - clean_img
         noise_disp = (noise - noise.min()) / (noise.max() - noise.min() + 1e-8)

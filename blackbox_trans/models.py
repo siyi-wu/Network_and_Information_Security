@@ -18,7 +18,7 @@ def get_substitute_model(device):
     # 适配 CIFAR-10 的 32x32 输入：将一开始的 7x7 卷积改为 3x3，并去掉最大池化
     model.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
     model.maxpool = nn.Identity()
-    model.fc = nn.Linear(512, 10) # CIFAR-10 有 10 个类别
+    model.fc = nn.Linear(512, 10)
     
     model.to(device)
     return model

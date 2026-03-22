@@ -20,7 +20,7 @@ def pgd_attack(model, images, labels, eps=8/255, alpha=2/255, iters=20):
         adv_images = images + alpha * images.grad.sign()
         
         eta = torch.clamp(adv_images - original_images, min=-eps, max=eps)
-        # 针对 normalize 后的图像空间做粗略的裁剪
+
         images = torch.clamp(original_images + eta, min=-2.5, max=2.5).detach() 
         
     return images.detach()
@@ -36,7 +36,7 @@ def query_efficient_attack(target_model, initial_adv_images, true_labels, max_qu
     success_mask = torch.zeros(batch_size, dtype=torch.bool).to(initial_adv_images.device)
     query_counts = torch.zeros(batch_size).to(initial_adv_images.device)
     
-    # 首先检查初始的迁移样本是否已经成功
+    # 检查初始的迁移样本是否已经成功
     with torch.no_grad():
         initial_preds = target_model(optimized_images).argmax(dim=1)
         success_mask = (initial_preds != true_labels)
